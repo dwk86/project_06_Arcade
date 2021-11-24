@@ -11,9 +11,10 @@ body {
     /* background-image: linear-gradient(to bottom right, rgb(155, 40, 40), rgb(54, 51, 51)); */
     display: grid;
     grid-template-areas: 
-        "hd hd hd hd hd hd pl pl pl pl"
-        "sd sd sd gm gm gm gm gm gm gm"
-        "ft ft ft ft ft ft ft ft ft ft";
+        "hd hd hd hd pl pl pl pl"
+        "sd gm gm gm gm gm gm gm"
+        "ft ft ft ft ft ft ft ft";
+    grid-template-rows: 5% 90% 5%;
 }
 
 header {
@@ -23,23 +24,31 @@ header {
 
 h1 {
     background-color: darkblue;
+    height: 100%;
+    text-align: center;
 }
 
-#playerNames {
+#playerInfo {
     grid-area: pl;
     display: grid;
-    grid-template-areas: "p1" "p2";
+    grid-template-areas: "p1 p2";
     background-color: purple;
 }
 
-#player1 {
+#playerOneInfo {
     border: 2px solid greenyellow;
     grid-area: p1;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
-#player2 {
+#playerTwoInfo {
     border: 2px solid greenyellow;
     grid-area: p2;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 #gameMenu {
@@ -50,6 +59,15 @@ h1 {
 #gameArea {
     grid-area: gm;
     background-color: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+td {
+    background-color: black;
+    height: 50px;
+    width: 50px;
 }
 
 footer {
