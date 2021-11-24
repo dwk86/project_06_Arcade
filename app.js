@@ -50,3 +50,17 @@ createGrid.addEventListener("click", makeGrid)
 
 
 let currentMark = "X"
+const grid = document.getElementsByTagName("table")[0]
+function createMark (event) {
+    const cell = event.target
+    if (event.target !== grid) {
+        if (cell.innerText) {
+            cell.innerText = currentMark
+        }
+    }
+    else {
+        // currently intended to do nothing. could add functionality for warning to player that space is taken.
+    }
+}
+
+grid.addEventListener("click", createMark)
