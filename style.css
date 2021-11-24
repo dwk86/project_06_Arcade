@@ -54,6 +54,16 @@ h1 {
 #gameMenu {
     grid-area: sd;
     background-color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+button {
+    background-color: gray;
+    height: 50px;
+    width: 50%;
 }
 
 #gameArea {

@@ -7,6 +7,7 @@ const gameState = {
     ]
 }
 
+// Reset a 3x3 game grid and player names
 function resetGame () {
     gameState.players = ["x", "o"];
     gameState.board = [
@@ -16,19 +17,36 @@ function resetGame () {
     ]
 }
 
-const grid = document.getElementById("gameGrid")
+const gameArea = document.getElementById("gameArea")
 
+/*  Check if a game grid is present on the page.
+    If there is no grid, create a 3x3 grid.
+    If there is a grid, do nothing. */
 function makeGrid () {
-    for (let i = 0; i < 3; i++) {
-        const row = document.createElement("tr")
-        for (let j = 0; j < 3; j++) {
-            const column = document.createElement("td")
-            row.appendChild(column)
-            console.log("column made")
+    let tableCheck = document.getElementsByTagName("table")[0]
+    console.log(tableCheck)
+    if (tableCheck) {
+        console.log("I'm in the if!")
+    }
+    else {
+        const grid = document.createElement("table")
+        for (let i = 0; i < 3; i++) {
+            const row = document.createElement("tr")
+            for (let j = 0; j < 3; j++) {
+                const column = document.createElement("td")
+                row.appendChild(column)
+                console.log("column made")
+            }
+            grid.appendChild(row)
+            console.log("row made")
         }
-        grid.appendChild(row)
-        console.log("row made")
+        gameArea.appendChild(grid)
     }
 }
 
-makeGrid()
+// Executes the makeGrid function on the button click *** button text is Create Game Grid ***
+const createGrid = document.getElementById("createGrid")
+createGrid.addEventListener("click", makeGrid)
+
+
+let currentMark = "X"
