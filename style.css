@@ -39,15 +39,25 @@ h1 {
     border: 2px solid greenyellow;
     grid-area: p1;
     display:flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+}
+
+label {
+    padding-right: 10px;
+    font-size:24px;
+}
+
+input {
+    font-size:24px;
+    text-align: center;
 }
 
 #playerTwoInfo {
     border: 2px solid greenyellow;
     grid-area: p2;
     display:flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
