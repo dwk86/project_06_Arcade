@@ -1,3 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family:Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+body {
+    /* background-image: linear-gradient(to bottom right, rgb(155, 40, 40), rgb(54, 51, 51)); */
+    display: grid;
+    grid-template-areas: 
+        "hd hd hd hd hd hd pl pl pl pl"
+        "sd sd sd gm gm gm gm gm gm gm"
+        "ft ft ft ft ft ft ft ft ft ft";
+}
+
+header {
+    grid-area: hd;
+    background-color: aqua;
+}
+
 h1 {
-    color: green;
+    background-color: darkblue;
+}
+
+#playerNames {
+    grid-area: pl;
+    display: grid;
+    grid-template-areas: "p1" "p2";
+    background-color: purple;
+}
+
+#player1 {
+    border: 2px solid greenyellow;
+    grid-area: p1;
+}
+
+#player2 {
+    border: 2px solid greenyellow;
+    grid-area: p2;
+}
+
+#gameMenu {
+    grid-area: sd;
+    background-color: red;
+}
+
+#gameArea {
+    grid-area: gm;
+    background-color: green;
+}
+
+footer {
+    grid-area: ft;
+    background-color: plum;
 }
