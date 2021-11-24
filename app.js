@@ -17,21 +17,18 @@ function resetGame () {
     ]
 }
 
-// const gameArea = document.getElementById("gameArea")
 const grid = document.getElementsByTagName("table")[0]
 
 /*  Check if a game grid is present on the page.
     If there is no grid, create a 3x3 grid.
     If there is a grid, do nothing. */
 function makeGrid () {
-    // let tableCheck = document.getElementsByTagName("table")[0]
     let tableCheck = document.getElementsByTagName("tr")[0]
     console.log(tableCheck)
     if (tableCheck) {
         console.log("I'm in the if!")
     }
     else {
-        // const grid = document.createElement("table")
         for (let i = 0; i < 3; i++) {
             const row = document.createElement("tr")
             for (let j = 0; j < 3; j++) {
@@ -42,18 +39,17 @@ function makeGrid () {
             grid.appendChild(row)
             console.log("row made")
         }
-        // gameArea.appendChild(grid)
     }
 }
 
-// Executes the makeGrid function on the button click *** button text is Create Game Grid ***
+// Executes the makeGrid function on the Create Game Grid button click
 const createGrid = document.getElementById("createGrid")
 createGrid.addEventListener("click", makeGrid)
 
 
-let currentMark = "X"
+const currentMark = "X"
 function createMark (event) {
-    console.log("createMark initialized")
+    console.log("createMark called")
     const cell = event.target
     if (event.target !== grid) {
         console.log("target is not the table")
@@ -67,7 +63,6 @@ function createMark (event) {
     }
     else {
         console.log("the target is the grid!")
-        // currently intended to do nothing. could add functionality for warning to player that space is taken.
     }
 }
 
