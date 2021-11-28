@@ -4,96 +4,26 @@
     box-sizing: border-box;
     text-decoration: none;
     font-family:Arial, Helvetica, sans-serif;
-    color: white;
 }
 
 body {
-    /* background-image: linear-gradient(to bottom right, rgb(155, 40, 40), rgb(54, 51, 51)); */
-    display: grid;
-    grid-template-areas: 
-        "hd hd hd hd pl pl pl pl"
-        "sd gm gm gm gm gm gm gm"
-        "ft ft ft ft ft ft ft ft";
-    grid-template-rows: 5% 90% 5%;
-}
-
-header {
-    grid-area: hd;
-    background-color: aqua;
-}
-
-h1 {
-    background-color: darkblue;
-    height: 100%;
-    text-align: center;
-}
-
-#playerInfo {
-    grid-area: pl;
-    display: grid;
-    grid-template-areas: "p1 p2";
-    background-color: purple;
-}
-
-#playerOneInfo {
-    border: 2px solid greenyellow;
-    grid-area: p1;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-
-label {
-    padding-right: 10px;
-    font-size:24px;
-}
-
-input {
-    font-size:24px;
-    text-align: center;
-}
-
-#playerTwoInfo {
-    border: 2px solid greenyellow;
-    grid-area: p2;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#gameMenu {
-    grid-area: sd;
-    background-color: red;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
 }
 
-button {
-    background-color: gray;
-    height: 50px;
-    width: 50%;
-}
-
-#gameArea {
-    grid-area: gm;
-    background-color: green;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+table {
+    background-color: grey;
+    margin: 10px;
+    padding: 5px;
 }
 
 td {
     background-color: black;
     color: white;
-    height: 50px;
-    width: 50px;
+    font-weight: bold;
+    font-size: 36px;
     text-align: center;
-    font-size:36px;
-}
-
-footer {
-    grid-area: ft;
-    background-color: plum;
+    width: 50px;
+    height: 50px;
 }
