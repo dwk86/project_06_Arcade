@@ -247,27 +247,28 @@ playAgainButton.addEventListener("click", function () {
     gameMessage.innerText = "Good Luck!"
 })
 
-function computerTurnLogic () {
+function computerTurnLogic() {
     if (gameState.playerNames[1] == "Computer" && !gameState.gameWon && !gameState.gameTied) {
-    
+
         // switch whose turn it is
         if (gameState.playerTurn == "X") {
             gameState.playerTurn = "O"
         } else {
             gameState.playerTurn = "X"
-        }    console.log("hi")
-    let computerTurnOver = false
-    console.log("computer logic entered")
-    while (!computerTurnOver) {
-        console.log("computer logic is trying")
-        let randomNumber = generateRandomNumber()
-        const td = document.getElementsByTagName("td")
-        console.log(randomNumber)
-        if (!td[randomNumber].innerText) {
-            console.log("computer is trying to mark")
-            td[randomNumber].innerText = "O"
-            computerTurnOver = true
+        }
+        console.log("hi")
+        let computerTurnOver = false
+        console.log("computer logic entered")
+        while (!computerTurnOver) {
+            console.log("computer logic is trying")
+            let randomNumber = generateRandomNumber()
+            const td = document.getElementsByTagName("td")
+            console.log(randomNumber)
+            if (!td[randomNumber].innerText) {
+                console.log("computer is trying to mark")
+                td[randomNumber].innerText = "O"
+                computerTurnOver = true
+            }
         }
     }
-}
 }
