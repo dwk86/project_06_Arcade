@@ -141,11 +141,13 @@ function resetGame() {
     playerTwoNameDisplay.innerText = "Player 2 Name:"
     playerOneWinsDisplay.innerText = "Wins : 0"
     playerTwoWinsDisplay.innerText = "Wins : 0"
+    playerOneNameInput.value = ""
+    playerTwoNameInput.value = ""
 }
 
 // load player names into gameState and into HTML
 function loadPlayerNames() {
-    if (playerOneNameInput.value && playerTwoNameInput.value) {
+    if (playerOneNameInput.value && playerTwoNameInput.value && !gameState.playerNamesLoaded) {
         playerOneNameDisplay.innerText = `Player 1 Name: ${playerOneNameInput.value}`
         playerTwoNameDisplay.innerText = `Player 2 Name: ${playerTwoNameInput.value}`
         gameState.playerNames[0] = playerOneNameInput.value
