@@ -39,9 +39,21 @@ main {
     margin-right: 25px;
 }
 
-#resetButton {
-    height: 50px;
-    width: 100px;
+#controlMenu:last-child {
+    margin-bottom: 0;
+}
+
+input {
+    margin-bottom: 10px;
+    height: 40px;
+    width: 140px;
+    text-align: center;
+}
+
+button {
+    margin-bottom: 10px;
+    height: 40px;
+    width: 140px;
 }
 
 #gameSpace {
