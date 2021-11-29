@@ -7,14 +7,56 @@
 }
 
 body {
+    background-image: radial-gradient(deepskyblue, white);
+    height: 100vh;
+    display: grid;
+    grid-template-areas: 
+    "hd"
+    "mn"
+    "ft";
+    grid-template-rows: 10vh 80vh 10vh;
+}
+
+header {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    grid-area: hd;
+    text-align: center;
+}
+
+main {
+    grid-area: mn;
+    display: flex;
+    justify-content: center;
+}
+
+#controlMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 25px;
+}
+
+#resetButton {
+    height: 50px;
+    width: 100px;
+}
+
+#gameSpace {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-table {
+#gameGrid {
+    width: fit-content;
+    height: fit-content;
+    grid-area: gm;
     background-color: grey;
     padding: 5px;
+    margin-right: 25px;
 }
 
 td {
@@ -27,7 +69,24 @@ td {
     height: 50px;
 }
 
-#controlMenu {
+#playerOne {
+    grid-area: p1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+#playerTwo {
+    grid-area: p2;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    grid-area: ft;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
 }
