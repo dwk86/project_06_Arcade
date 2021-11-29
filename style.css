@@ -12,9 +12,10 @@ body {
     display: grid;
     grid-template-areas: 
     "hd"
+    "ms"
     "mn"
     "ft";
-    grid-template-rows: 10vh 80vh 10vh;
+    grid-template-rows: 10vh 10vh 70vh 10vh;
 }
 
 header {
@@ -22,6 +23,11 @@ header {
     flex-direction: column;
     justify-content: center;
     grid-area: hd;
+    text-align: center;
+}
+
+#gameMessage {
+    grid-area: ms;
     text-align: center;
 }
 
