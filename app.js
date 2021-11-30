@@ -33,7 +33,7 @@ const playAgainButton = document.getElementById("playAgainButton")
 const gameMessage = document.getElementById("gameMessage")
 
 function generateRandomNumber() {
-    return Math.floor(Math.random() * 100) % 10
+    return Math.floor(Math.random() * 100) % 9
 }
 
 // create a 3x3 game grid in table id gameGrid
@@ -51,16 +51,13 @@ function createGameGrid() {
 // creates a mark on the game grid for the player whose turn it is
 function createMark(event) {
     const targetCell = event.target
-    console.log(gameState.playerTurn)
+    let winner = ""
     // if the target of the click event is not a cell, skip the game logic
     if (event.target !== gameGrid) {
-        console.log(gameState.playerTurn)
         // if the game isn't won or tied and the player names have been loaded, go through the game logic
         if (!gameState.gameWon && !gameState.gameTied && gameState.playerNamesLoaded) {
-            console.log(gameState.playerTurn)
             // if the target cell of the click is empty, place a mark
             if (!targetCell.innerText) {
-                console.log(gameState.playerTurn)
                 // mark the cell according to the player whose turn it is
                 if (gameState.playerTurn == "X") {
                     targetCell.innerText = gameState.playerMarks[0]
@@ -68,42 +65,11 @@ function createMark(event) {
                     targetCell.innerText = gameState.playerMarks[1]
                 }
                 updateBoardState()
+                winner = checkEndOfGame()
                 computerTurnLogic()
-                // check to see if a win condition is in any row
-                gameState.gameWon = checkBoardRows()
-                // if the game hasn't been won by rows, check to see if it is by columns
-                if (!gameState.gameWon) {
-                    gameState.gameWon = checkBoardColumns()
-                }
-                /* if the game isn't won by rows or columns, see if it is by diagonals
-                   !!!!!CURRENTLY ONLY WORKS FOR 3X3 GRID!!!!! */
-                if (!gameState.gameWon) {
-                    gameState.gameWon = checkBoardDiagonals()
-                }
-                // if the game is won, increment that player's win count and change the game message
-                if (gameState.gameWon) {
-                    if (gameState.playerTurn == "X") {
-                        gameState.playerWins[0]++
-                        playerOneWinsDisplay.innerText = `Wins: ${gameState.playerWins[0]}`
-                        gameMessage.innerText = `CONGRATULATIONS ${gameState.playerNames[0]}!!! YOU WIN!!!`
-                    } else {
-                        gameState.playerWins[1]++
-                        playerTwoWinsDisplay.innerText = `Wins: ${gameState.playerWins[1]}`
-                        if (gameState.playerNames[1] != "Computer") {
-                            gameMessage.innerText = `CONGRATULATIONS ${gameState.playerNames[1]}!!! YOU WIN!!!`
-                        } else {
-                            gameMessage.innerText = `Nice try ${gameState.playerNames[0]}! Unfortunately, the computer won. You'll get them next time!`
-                        }
-                    }
-                }
-                /* checks to see if the game isn't won and the board is filled.
-                   if it hasn't been won and the board is filled, the game is tied
-                   since there are no cells left to play in. */
-                if (!gameState.gameWon) {
-                    gameState.gameTied = checkBoardIsFilled()
-                    if (gameState.gameTied) {
-                        gameMessage.innerText = "The game has ended in a tie!"
-                    }
+                updateBoardState()
+                if (!gameState.gameWon && !gameState.gameTied) {
+                    winner = checkEndOfGame()
                 }
                 // switch whose turn it is
                 if (gameState.playerTurn == "X") {
@@ -111,7 +77,54 @@ function createMark(event) {
                 } else {
                     gameState.playerTurn = "X"
                 }
+                if (winner == gameState.playerNames[0]) {
+                    gameState.playerWins[0]++
+                    playerOneWinsDisplay.innerText = `Wins: ${gameState.playerWins[0]}`
+                }
+                else if (winner == gameState.playerNames[1]) {
+                    gameState.playerWins[1]++
+                    playerTwoWinsDisplay.innerText = `Wins: ${gameState.playerWins[1]}`
+                }
             }
+        }
+    }
+}
+
+function checkEndOfGame () {
+    // check to see if a win condition is in any row
+    if (!gameState.gameWon){
+        gameState.gameWon = checkBoardRows()
+    }
+    // if the game hasn't been won by rows, check to see if it is by columns
+    if (!gameState.gameWon) {
+        gameState.gameWon = checkBoardColumns()
+    }
+    /* if the game isn't won by rows or columns, see if it is by diagonals
+       !!!!!CURRENTLY ONLY WORKS FOR 3X3 GRID!!!!! */
+    if (!gameState.gameWon) {
+        gameState.gameWon = checkBoardDiagonals()
+    }
+    // if the game is won, increment that player's win count and change the game message
+    if (gameState.gameWon) {
+        if (gameState.playerTurn == "X") {
+            gameMessage.innerText = `CONGRATULATIONS ${gameState.playerNames[0]}!!! YOU WIN!!!`
+            return gameState.playerNames[0]
+        } else {
+            if (gameState.playerNames[1] != "Computer") {
+                gameMessage.innerText = `CONGRATULATIONS ${gameState.playerNames[1]}!!! YOU WIN!!!`
+            } else {
+                gameMessage.innerText = `Nice try ${gameState.playerNames[0]}! Unfortunately, the computer won. You'll get them next time!`
+            }
+            return gameState.playerNames[1]
+        }
+    }
+    /* checks to see if the game isn't won and the board is filled.
+       if it hasn't been won and the board is filled, the game is tied
+       since there are no cells left to play in. */
+    if (!gameState.gameWon) {
+        gameState.gameTied = checkBoardIsFilled()
+        if (gameState.gameTied) {
+            gameMessage.innerText = "The game has ended in a tie!"
         }
     }
 }
@@ -213,9 +226,7 @@ function loadPlayerNames() {
 }
 
 // creates 3x3 grid. intended to be replaced with ability to create custom grids
-console.log(gameState.playerTurn)
 createGameGrid()
-console.log(gameState.playerTurn)
 /* logic for placing mark on the game board. also houses logic for win condition
    and switching the player whose turn it is */
 gameGrid.addEventListener("click", createMark)
@@ -226,7 +237,6 @@ updatePlayersButton.addEventListener("click", loadPlayerNames)
 // just places Computer as the name for player 2
 isPlayerTwoComputerButton.addEventListener("click", function () {
     playerTwoNameInput.value = "Computer"
-    console.log(gameState.playerTurn)
 })
 /* resets the game for playing again. is different than the reset game button
    because it doesn't reset player names, wins, or symbols */
@@ -245,6 +255,9 @@ playAgainButton.addEventListener("click", function () {
     playerOneNameInput.value = ""
     playerTwoNameInput.value = ""
     gameMessage.innerText = "Good Luck!"
+    if (gameState.playerNames[1] == "Computer" && gameState.playerTurn == "O"){
+        computerTurnLogic()
+    }
 })
 
 function computerTurnLogic() {
@@ -256,16 +269,11 @@ function computerTurnLogic() {
         } else {
             gameState.playerTurn = "X"
         }
-        console.log("hi")
         let computerTurnOver = false
-        console.log("computer logic entered")
         while (!computerTurnOver) {
-            console.log("computer logic is trying")
             let randomNumber = generateRandomNumber()
             const td = document.getElementsByTagName("td")
-            console.log(randomNumber)
             if (!td[randomNumber].innerText) {
-                console.log("computer is trying to mark")
                 td[randomNumber].innerText = "O"
                 computerTurnOver = true
             }
