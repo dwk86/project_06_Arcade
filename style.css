@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Comforter&family=Press+Start+2P&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
 }
 
 body {
@@ -26,9 +29,14 @@ header {
     text-align: center;
 }
 
+h1 {
+    font-size: 48px;
+}
+
 #gameMessage {
     grid-area: ms;
     text-align: center;
+    font-size: 24px;
 }
 
 main {
@@ -52,14 +60,25 @@ main {
 input {
     margin-bottom: 10px;
     height: 40px;
-    width: 140px;
+    width: 200px;
     text-align: center;
+    font-size: 10px;
 }
 
 button {
     margin-bottom: 10px;
     height: 40px;
-    width: 140px;
+    width: 200px;
+    font-size: 10px;
+}
+
+button:hover {
+    box-shadow: 2px 2px 2px black;
+    background-color: lightskyblue;
+}
+
+button:active {
+    background-color: deepskyblue;
 }
 
 #gameSpace {
@@ -107,4 +126,6 @@ footer {
     justify-content: flex-end;
     align-items: center;
     padding: 10px;
+    font-family: 'Comforter', cursive;
+    font-size: 24px;
 }
