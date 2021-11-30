@@ -205,8 +205,8 @@ function resetGame() {
     }
     playerOneNameDisplay.innerText = "Player 1 Name:"
     playerTwoNameDisplay.innerText = "Player 2 Name:"
-    playerOneWinsDisplay.innerText = "Wins : 0"
-    playerTwoWinsDisplay.innerText = "Wins : 0"
+    playerOneWinsDisplay.innerText = "Wins : -"
+    playerTwoWinsDisplay.innerText = "Wins : -"
     playerOneNameInput.value = ""
     playerTwoNameInput.value = ""
     gameMessage.innerText = "Good Luck!"

@@ -62,6 +62,10 @@ input {
     height: 40px;
     width: 200px;
     text-align: center;
+    font-size: 14px;
+}
+
+input::placeholder {
     font-size: 10px;
 }
 
@@ -74,7 +78,7 @@ button {
 
 button:hover {
     box-shadow: 2px 2px 2px black;
-    background-color: lightskyblue;
+    background-color: rgb(161, 219, 255);
 }
 
 button:active {
