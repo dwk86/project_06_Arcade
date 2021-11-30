@@ -31,6 +31,8 @@ const playerOneWinsDisplay = document.getElementById("playerOneWinsDisplay")
 const playerTwoWinsDisplay = document.getElementById("playerTwoWinsDisplay")
 const playAgainButton = document.getElementById("playAgainButton")
 const gameMessage = document.getElementById("gameMessage")
+const rowCountInput = document.getElementById("rowCount")
+const columnCountInput = document.getElementById("columnCount")
 
 function generateRandomNumber() {
     return Math.floor(Math.random() * 100) % 9
@@ -41,6 +43,26 @@ function createGameGrid() {
     for (let i = 0; i < 3; i++) {
         const row = document.createElement("tr")
         for (let j = 0; j < 3; j++) {
+            const cell = document.createElement("td")
+            row.appendChild(cell)
+        }
+        gameGrid.appendChild(row)
+    }
+}
+
+// a function intended to create a game grid based on user selected inputs
+function createDynamicGrid() {
+    console.log(gameGrid.childElementCount)
+    const count = gameGrid.childElementCount
+    for( let i = count-1; i >= 0; i--) {
+        let el = document.getElementsByTagName("tr")[i]
+        console.log(i)
+        console.log(el)
+        el.remove()
+    }
+    for (let j = 0; j < rowCountInput.value; j++) {
+        const row = document.createElement("tr")
+        for (let k = 0; k < columnCountInput.value; k++) {
             const cell = document.createElement("td")
             row.appendChild(cell)
         }
@@ -248,6 +270,8 @@ function computerTurnLogic() {
 
 // creates 3x3 grid. intended to be replaced with ability to create custom grids
 createGameGrid()
+rowCountInput.addEventListener("change", createDynamicGrid)
+columnCountInput.addEventListener("change", createDynamicGrid)
 /* logic for placing mark on the game board. also houses logic for win condition
    and switching the player whose turn it is */
 gameGrid.addEventListener("click", createMark)
@@ -283,16 +307,3 @@ playAgainButton.addEventListener("click", function () {
 
 // ITEMS NOT IMPLEMENTED ARE BELOW!!!
 
-// a function intended to create a game grid based on user selected inputs
-function createDynamicGrid() {
-    const rowCount = document.getElementById("rowCount")
-    const columnCount = document.getElementById("columnCount")
-    for (let i = 0; i < rowCount.value; i++) {
-        const row = document.createElement("tr")
-        for (let j = 0; j < columnCount.value; j++) {
-            const cell = document.createElement("td")
-            row.appendChild(cell)
-        }
-        gameGrid.appendChild(row)
-    }
-}
