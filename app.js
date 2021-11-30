@@ -225,6 +225,28 @@ function loadPlayerNames() {
     }
 }
 
+// logic for computer randomly placing a mark
+function computerTurnLogic() {
+    if (gameState.playerNames[1] == "Computer" && !gameState.gameWon && !gameState.gameTied) {
+
+        // switch whose turn it is
+        if (gameState.playerTurn == "X") {
+            gameState.playerTurn = "O"
+        } else {
+            gameState.playerTurn = "X"
+        }
+        let computerTurnOver = false
+        while (!computerTurnOver) {
+            let randomNumber = generateRandomNumber()
+            const td = document.getElementsByTagName("td")
+            if (!td[randomNumber].innerText) {
+                td[randomNumber].innerText = "O"
+                computerTurnOver = true
+            }
+        }
+    }
+}
+
 // creates 3x3 grid. intended to be replaced with ability to create custom grids
 createGameGrid()
 /* logic for placing mark on the game board. also houses logic for win condition
@@ -259,24 +281,3 @@ playAgainButton.addEventListener("click", function () {
         computerTurnLogic()
     }
 })
-
-function computerTurnLogic() {
-    if (gameState.playerNames[1] == "Computer" && !gameState.gameWon && !gameState.gameTied) {
-
-        // switch whose turn it is
-        if (gameState.playerTurn == "X") {
-            gameState.playerTurn = "O"
-        } else {
-            gameState.playerTurn = "X"
-        }
-        let computerTurnOver = false
-        while (!computerTurnOver) {
-            let randomNumber = generateRandomNumber()
-            const td = document.getElementsByTagName("td")
-            if (!td[randomNumber].innerText) {
-                td[randomNumber].innerText = "O"
-                computerTurnOver = true
-            }
-        }
-    }
-}
