@@ -52,22 +52,24 @@ function createGameGrid() {
 
 // a function intended to create a game grid based on user selected inputs
 function createDynamicGrid() {
-    console.log(gameGrid.childElementCount)
     const count = gameGrid.childElementCount
-    for( let i = count-1; i >= 0; i--) {
+    let newGameStateBoard = []
+    for (let i = count - 1; i >= 0; i--) {
         let el = document.getElementsByTagName("tr")[i]
-        console.log(i)
-        console.log(el)
         el.remove()
     }
-    for (let j = 0; j < rowCountInput.value; j++) {
+    for (let i = 0; i < rowCountInput.value; i++) {
         const row = document.createElement("tr")
-        for (let k = 0; k < columnCountInput.value; k++) {
+        let newGameStateBoardRow = []
+        for (let j = 0; j < columnCountInput.value; j++) {
             const cell = document.createElement("td")
             row.appendChild(cell)
+            newGameStateBoardRow.push(null)
         }
         gameGrid.appendChild(row)
+        newGameStateBoard.push(newGameStateBoardRow)
     }
+    gameState.board = newGameStateBoard
 }
 
 // creates a mark on the game grid for the player whose turn it is
@@ -114,16 +116,16 @@ function createMark(event) {
 function checkEndOfGame() {
     // check to see if a win condition is in any row
     if (!gameState.gameWon) {
-        gameState.gameWon = checkBoardRows()
+        gameState.gameWon = checkDynamicBoardRows()
     }
     // if the game hasn't been won by rows, check to see if it is by columns
     if (!gameState.gameWon) {
-        gameState.gameWon = checkBoardColumns()
+        gameState.gameWon = checkDynamicBoardColumns()
     }
     /* if the game isn't won by rows or columns, see if it is by diagonals
        !!!!!CURRENTLY ONLY WORKS FOR 3X3 GRID!!!!! */
     if (!gameState.gameWon) {
-        gameState.gameWon = checkBoardDiagonals()
+        gameState.gameWon = checkDynamicBoardDiagonals()
     }
     // if the game is won, increment that player's win count and change the game message
     if (gameState.gameWon) {
@@ -164,32 +166,39 @@ function updateBoardState() {
     }
 }
 
-// checks each row to see if the win condition is met
-function checkBoardRows() {
+// checks each row to see if the win condition is met for a grid of any number of rows
+function checkDynamicBoardRows() {
     for (let i = 0; i < gameState.board.length; i++) {
-        if (gameState.board[i][0] && gameState.board[i][1] && gameState.board[i][2] && gameState.board[i][0] == gameState.board[i][1] && gameState.board[i][0] == gameState.board[i][2]) {
-            return true
+        for (let j = 0; j < gameState.board[i].length; j++) {
+            if (gameState.board[i][j] && gameState.board[i][j+1] && gameState.board[i][j+2] && gameState.board[i][j] == gameState.board[i][j+1] && gameState.board[i][j] == gameState.board[i][j+2]) {
+                return true
+            }
         }
     }
     return false
 }
 
-// checks the diagonals to see if the win condition is met
-function checkBoardDiagonals() {
-    if (gameState.board[0][0] && gameState.board[1][1] && gameState.board[2][2] && gameState.board[0][0] == gameState.board[1][1] && gameState.board[0][0] == gameState.board[2][2]) {
-        return true
-    } else if (gameState.board[2][0] && gameState.board[1][1] && gameState.board[0][2] && gameState.board[2][0] == gameState.board[1][1] && gameState.board[2][0] == gameState.board[0][2]) {
-        return true
-    } else {
-        return false
+// checks the diagonals to see if the win condition is met for a grid of varying rows and columns
+function checkDynamicBoardDiagonals() {
+    for (let i = 0; i < gameState.board.length-2; i++) {
+        for (let j = 0; j < gameState.board[0].length; j++) {
+            if (gameState.board[i][j] && gameState.board[i+1][j+1] && gameState.board[i+2][j+2] && gameState.board[i][j] == gameState.board[i+1][j+1] && gameState.board[i][j] == gameState.board[i+2][j+2]) {
+                return true
+            } else if (gameState.board[i+2][j] && gameState.board[i+1][j+1] && gameState.board[i][j+2] && gameState.board[i+2][j] == gameState.board[i+1][j+1] && gameState.board[i+2][j] == gameState.board[i][j+2]) {
+                return true
+            }
+        }
     }
+    return false
 }
 
-// checks each column to see if the win condition is met
-function checkBoardColumns() {
+// checks each column to see if the win condition is met for a grid with a varying number of columns
+function checkDynamicBoardColumns() {
     for (let i = 0; i < gameState.board[0].length; i++) {
-        if (gameState.board[0][i] && gameState.board[1][i] && gameState.board[2][i] && gameState.board[0][i] == gameState.board[1][i] && gameState.board[0][i] == gameState.board[2][i]) {
-            return true
+        for (let j = 0; j < gameState.board.length-2; j++) {
+            if (gameState.board[j][i] && gameState.board[j+1][i] && gameState.board[j+2][i] && gameState.board[j][i] == gameState.board[j+1][i] && gameState.board[j][i] == gameState.board[j+2][i]) {
+                return true
+            }
         }
     }
     return false
@@ -216,11 +225,15 @@ function resetGame() {
     gameState.playerTurn = "X"
     gameState.gameWon = false
     gameState.gameTied = false
-    gameState.board = [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null]
-    ]
+    let newGameStateBoard = []
+    for (let i = 0; i < rowCountInput.value; i++) {
+        let newGameStateBoardRow = []
+        for (let j = 0; j < columnCountInput.value; j++) {
+            newGameStateBoardRow.push(null)
+        }
+        newGameStateBoard.push(newGameStateBoardRow)
+    }
+    gameState.board = newGameStateBoard
     for (let i = 0; i < td.length; i++) {
         td[i].innerText = ""
     }
@@ -289,11 +302,15 @@ playAgainButton.addEventListener("click", function () {
     const td = document.getElementsByTagName("td")
     gameState.gameWon = false
     gameState.gameTied = false
-    gameState.board = [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null]
-    ]
+    let newGameStateBoard = []
+    for (let i = 0; i < rowCountInput.value; i++) {
+        let newGameStateBoardRow = []
+        for (let j = 0; j < columnCountInput.value; j++) {
+            newGameStateBoardRow.push(null)
+        }
+        newGameStateBoard.push(newGameStateBoardRow)
+    }
+    gameState.board = newGameStateBoard
     for (let i = 0; i < td.length; i++) {
         td[i].innerText = ""
     }
@@ -306,4 +323,3 @@ playAgainButton.addEventListener("click", function () {
 })
 
 // ITEMS NOT IMPLEMENTED ARE BELOW!!!
-

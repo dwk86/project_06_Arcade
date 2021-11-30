@@ -104,7 +104,7 @@ button:active {
     height: fit-content;
     grid-area: gm;
     background-color: grey;
-    border-radius: 5%;
+    border-radius: 1%;
     padding: 5px;
     margin-right: 25px;
 }
