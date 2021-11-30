@@ -80,8 +80,7 @@ function createMark(event) {
                 if (winner == gameState.playerNames[0]) {
                     gameState.playerWins[0]++
                     playerOneWinsDisplay.innerText = `Wins: ${gameState.playerWins[0]}`
-                }
-                else if (winner == gameState.playerNames[1]) {
+                } else if (winner == gameState.playerNames[1]) {
                     gameState.playerWins[1]++
                     playerTwoWinsDisplay.innerText = `Wins: ${gameState.playerWins[1]}`
                 }
@@ -90,9 +89,9 @@ function createMark(event) {
     }
 }
 
-function checkEndOfGame () {
+function checkEndOfGame() {
     // check to see if a win condition is in any row
-    if (!gameState.gameWon){
+    if (!gameState.gameWon) {
         gameState.gameWon = checkBoardRows()
     }
     // if the game hasn't been won by rows, check to see if it is by columns
@@ -277,7 +276,23 @@ playAgainButton.addEventListener("click", function () {
     playerOneNameInput.value = ""
     playerTwoNameInput.value = ""
     gameMessage.innerText = "Good Luck!"
-    if (gameState.playerNames[1] == "Computer" && gameState.playerTurn == "O"){
+    if (gameState.playerNames[1] == "Computer" && gameState.playerTurn == "O") {
         computerTurnLogic()
     }
 })
+
+// ITEMS NOT IMPLEMENTED ARE BELOW!!!
+
+// a function intended to create a game grid based on user selected inputs
+function createDynamicGrid() {
+    const rowCount = document.getElementById("rowCount")
+    const columnCount = document.getElementById("columnCount")
+    for (let i = 0; i < rowCount.value; i++) {
+        const row = document.createElement("tr")
+        for (let j = 0; j < columnCount.value; j++) {
+            const cell = document.createElement("td")
+            row.appendChild(cell)
+        }
+        gameGrid.appendChild(row)
+    }
+}

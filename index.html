@@ -15,6 +15,10 @@
     <h2 id="gameMessage">Good Luck!</h2>
     <main>
         <div id="controlMenu">
+            <label for="rowCount">Number of Rows (3-10):</label>
+            <input class="userGrid" type="number" id="rowCount" name="rowCount" min="3" max="10" value="3">
+            <label for="columnCount">Number of Columns (3-10):</label>
+            <input class="userGrid" type="number" id="columnCount" name="columnCount" min="3" max="10" value="3">
             <input type="text" id="playerOneNameInput" placeholder="Player 1 Name">
             <input type="text" id="playerTwoNameInput" placeholder="Player 2 Name">
             <button id="isPlayerTwoComputerButton">Play against Computer Player</button>
