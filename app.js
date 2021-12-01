@@ -323,3 +323,69 @@ playAgainButton.addEventListener("click", function () {
 })
 
 // ITEMS NOT IMPLEMENTED ARE BELOW!!!
+
+// logic for computer intelligently placing a mark
+// function computerSmartTurnLogic() {
+//     if (gameState.playerNames[1] == "Computer" && !gameState.gameWon && !gameState.gameTied) {
+//         // switch whose turn it is
+//         if (gameState.playerTurn == "X") {
+//             gameState.playerTurn = "O"
+//         } else {
+//             gameState.playerTurn = "X"
+//         }
+//         let computerTurnOver = false
+//         let EnemyWinChecked = false
+//         let CompWinChecked = false
+//         while (!computerTurnOver) {
+//             console.log("WHILE LOOOOOOOOOOOP")
+//             let randomNumber = generateRandomNumber()
+//             const td = document.getElementsByTagName("td")
+//             if (!EnemyWinChecked) {
+//                 console.log("gameState.board.length:", gameState.board.length)
+//                 console.log("gameState.board[0].length:", gameState.board[0].length)
+//                 for (let row = 0; row < gameState.board.length; row++) {
+//                     console.log("enemyWin row:", row)
+//                     for (let col = 0; col < gameState.board[0].length; col++) {
+//                         console.log("enemyWin col:", col)
+//                         console.log("enemyWin gameState.board[row][col]:", gameState.board[row][col])
+//                         if (!gameState.board[row][col]) {
+//                             console.log("IN THE ENEMY IF")
+//                             gameState.board[row][col] = "X"
+//                             if (checkDynamicBoardRows() || checkDynamicBoardColumns() || checkDynamicBoardDiagonals()) {
+//                                 console.log("IN THE ENEMY IF IF")
+//                                 td[row*col].innerText = "O"
+//                                 computerTurnOver = true
+//                                 col = 20
+//                                 row = 20
+//                             }
+//                             gameState.board[row][col] = null
+//                         }
+//                     }
+//                 }
+//                 EnemyWinChecked = true
+//             }
+//             else if (!CompWinChecked && !EnemyWinChecked) {
+//                 for (let row = 0; row < gameState.board.length; row++) {
+//                     for (let col = 0; col < gameState.board[0].length; col++) {
+//                         if (!gameState.board[row][col]) {
+//                             gameState.board[row][col] = "O"
+//                             if (checkDynamicBoardRows() || checkDynamicBoardColumns() || checkDynamicBoardDiagonals()) {
+//                                 td[row*col].innerText = "O"
+//                                 computerTurnOver = true
+//                                 col = 99
+//                                 row = 99
+//                             }
+//                             gameState.board[row][col] = null
+//                         }
+//                     }
+//                 }
+//                 CompWinChecked = true
+//             }
+//             else if (!td[randomNumber].innerText) {
+//                 td[randomNumber].innerText = "O"
+//                 computerTurnOver = true
+//             }
+//         }
+//     }
+//     gameState.playerTurn = "O"
+// }
