@@ -90,7 +90,7 @@ function createMark(event) {
                 }
                 updateBoardState()
                 winner = checkEndOfGame()
-                computerTurnLogic()
+                computerSmartTurnLogic()
                 updateBoardState()
                 if (!gameState.gameWon && !gameState.gameTied) {
                     winner = checkEndOfGame()
@@ -170,7 +170,7 @@ function updateBoardState() {
 function checkDynamicBoardRows() {
     for (let i = 0; i < gameState.board.length; i++) {
         for (let j = 0; j < gameState.board[i].length; j++) {
-            if (gameState.board[i][j] && gameState.board[i][j+1] && gameState.board[i][j+2] && gameState.board[i][j] == gameState.board[i][j+1] && gameState.board[i][j] == gameState.board[i][j+2]) {
+            if (gameState.board[i][j] && gameState.board[i][j + 1] && gameState.board[i][j + 2] && gameState.board[i][j] == gameState.board[i][j + 1] && gameState.board[i][j] == gameState.board[i][j + 2]) {
                 return true
             }
         }
@@ -180,11 +180,11 @@ function checkDynamicBoardRows() {
 
 // checks the diagonals to see if the win condition is met for a grid of varying rows and columns
 function checkDynamicBoardDiagonals() {
-    for (let i = 0; i < gameState.board.length-2; i++) {
+    for (let i = 0; i < gameState.board.length - 2; i++) {
         for (let j = 0; j < gameState.board[0].length; j++) {
-            if (gameState.board[i][j] && gameState.board[i+1][j+1] && gameState.board[i+2][j+2] && gameState.board[i][j] == gameState.board[i+1][j+1] && gameState.board[i][j] == gameState.board[i+2][j+2]) {
+            if (gameState.board[i][j] && gameState.board[i + 1][j + 1] && gameState.board[i + 2][j + 2] && gameState.board[i][j] == gameState.board[i + 1][j + 1] && gameState.board[i][j] == gameState.board[i + 2][j + 2]) {
                 return true
-            } else if (gameState.board[i+2][j] && gameState.board[i+1][j+1] && gameState.board[i][j+2] && gameState.board[i+2][j] == gameState.board[i+1][j+1] && gameState.board[i+2][j] == gameState.board[i][j+2]) {
+            } else if (gameState.board[i + 2][j] && gameState.board[i + 1][j + 1] && gameState.board[i][j + 2] && gameState.board[i + 2][j] == gameState.board[i + 1][j + 1] && gameState.board[i + 2][j] == gameState.board[i][j + 2]) {
                 return true
             }
         }
@@ -195,8 +195,8 @@ function checkDynamicBoardDiagonals() {
 // checks each column to see if the win condition is met for a grid with a varying number of columns
 function checkDynamicBoardColumns() {
     for (let i = 0; i < gameState.board[0].length; i++) {
-        for (let j = 0; j < gameState.board.length-2; j++) {
-            if (gameState.board[j][i] && gameState.board[j+1][i] && gameState.board[j+2][i] && gameState.board[j][i] == gameState.board[j+1][i] && gameState.board[j][i] == gameState.board[j+2][i]) {
+        for (let j = 0; j < gameState.board.length - 2; j++) {
+            if (gameState.board[j][i] && gameState.board[j + 1][i] && gameState.board[j + 2][i] && gameState.board[j][i] == gameState.board[j + 1][i] && gameState.board[j][i] == gameState.board[j + 2][i]) {
                 return true
             }
         }
@@ -281,6 +281,69 @@ function computerTurnLogic() {
     }
 }
 
+//logic for computer intelligently placing a mark
+function computerSmartTurnLogic() {
+    if (gameState.playerNames[1] == "Computer" && !gameState.gameWon && !gameState.gameTied) {
+        // switch whose turn it is
+        if (gameState.playerTurn == "X") {
+            gameState.playerTurn = "O"
+        } else {
+            gameState.playerTurn = "X"
+        }
+        let computerTurnOver = false
+        let EnemyWinChecked = false
+        let CompWinChecked = false
+        while (!computerTurnOver) {
+            let randomNumber = generateRandomNumber()
+            const td = document.getElementsByTagName("td")
+            if (!CompWinChecked) {
+                for (let row = 0; row < gameState.board.length; row++) {
+                    for (let col = 0; col < gameState.board[0].length; col++) {
+                        if (!gameState.board[row][col]) {
+                            gameState.board[row][col] = "O"
+                            if (checkDynamicBoardRows() || checkDynamicBoardColumns() || checkDynamicBoardDiagonals()) {
+                                if (!td[(gameState.board.length * row) + col].innerText) {
+                                    td[(gameState.board.length * row) + col].innerText = "O"
+                                    computerTurnOver = true
+                                }
+                            }
+                            gameState.board[row][col] = null
+                            if (computerTurnOver) {
+                                col = 99
+                                row = 99
+                            }
+                        }
+                    }
+                }
+                CompWinChecked = true
+            } else if (!EnemyWinChecked) {
+                for (let row = 0; row < gameState.board.length; row++) {
+                    for (let col = 0; col < gameState.board[0].length; col++) {
+                        if (!gameState.board[row][col]) {
+                            gameState.board[row][col] = "X"
+                            if (checkDynamicBoardRows() || checkDynamicBoardColumns() || checkDynamicBoardDiagonals()) {
+                                if (!td[(gameState.board.length * row) + col].innerText) {
+                                    td[(gameState.board.length * row) + col].innerText = "O"
+                                    computerTurnOver = true
+                                }
+                            }
+                            gameState.board[row][col] = null
+                            if (computerTurnOver) {
+                                col = 20
+                                row = 20
+                            }
+                        }
+                    }
+                }
+                EnemyWinChecked = true
+            } else if (!td[randomNumber].innerText) {
+                td[randomNumber].innerText = "O"
+                computerTurnOver = true
+            }
+        }
+    }
+}
+
 // creates 3x3 grid. intended to be replaced with ability to create custom grids
 createGameGrid()
 rowCountInput.addEventListener("change", createDynamicGrid)
@@ -318,74 +381,6 @@ playAgainButton.addEventListener("click", function () {
     playerTwoNameInput.value = ""
     gameMessage.innerText = "Good Luck!"
     if (gameState.playerNames[1] == "Computer" && gameState.playerTurn == "O") {
-        computerTurnLogic()
+        computerSmartTurnLogic()
     }
 })
-
-// ITEMS NOT IMPLEMENTED ARE BELOW!!!
-
-// logic for computer intelligently placing a mark
-// function computerSmartTurnLogic() {
-//     if (gameState.playerNames[1] == "Computer" && !gameState.gameWon && !gameState.gameTied) {
-//         // switch whose turn it is
-//         if (gameState.playerTurn == "X") {
-//             gameState.playerTurn = "O"
-//         } else {
-//             gameState.playerTurn = "X"
-//         }
-//         let computerTurnOver = false
-//         let EnemyWinChecked = false
-//         let CompWinChecked = false
-//         while (!computerTurnOver) {
-//             console.log("WHILE LOOOOOOOOOOOP")
-//             let randomNumber = generateRandomNumber()
-//             const td = document.getElementsByTagName("td")
-//             if (!EnemyWinChecked) {
-//                 console.log("gameState.board.length:", gameState.board.length)
-//                 console.log("gameState.board[0].length:", gameState.board[0].length)
-//                 for (let row = 0; row < gameState.board.length; row++) {
-//                     console.log("enemyWin row:", row)
-//                     for (let col = 0; col < gameState.board[0].length; col++) {
-//                         console.log("enemyWin col:", col)
-//                         console.log("enemyWin gameState.board[row][col]:", gameState.board[row][col])
-//                         if (!gameState.board[row][col]) {
-//                             console.log("IN THE ENEMY IF")
-//                             gameState.board[row][col] = "X"
-//                             if (checkDynamicBoardRows() || checkDynamicBoardColumns() || checkDynamicBoardDiagonals()) {
-//                                 console.log("IN THE ENEMY IF IF")
-//                                 td[row*col].innerText = "O"
-//                                 computerTurnOver = true
-//                                 col = 20
-//                                 row = 20
-//                             }
-//                             gameState.board[row][col] = null
-//                         }
-//                     }
-//                 }
-//                 EnemyWinChecked = true
-//             }
-//             else if (!CompWinChecked && !EnemyWinChecked) {
-//                 for (let row = 0; row < gameState.board.length; row++) {
-//                     for (let col = 0; col < gameState.board[0].length; col++) {
-//                         if (!gameState.board[row][col]) {
-//                             gameState.board[row][col] = "O"
-//                             if (checkDynamicBoardRows() || checkDynamicBoardColumns() || checkDynamicBoardDiagonals()) {
-//                                 td[row*col].innerText = "O"
-//                                 computerTurnOver = true
-//                                 col = 99
-//                                 row = 99
-//                             }
-//                             gameState.board[row][col] = null
-//                         }
-//                     }
-//                 }
-//                 CompWinChecked = true
-//             }
-//             else if (!td[randomNumber].innerText) {
-//                 td[randomNumber].innerText = "O"
-//                 computerTurnOver = true
-//             }
-//         }
-//     }
-//     gameState.playerTurn = "O"
-// }
